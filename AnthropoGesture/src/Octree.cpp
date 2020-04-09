@@ -2,7 +2,7 @@
 #include "Octree.h"
 #include "Actor.h"
 
-Octree::Octree(weak_ptr<Octree> _parent, glm::vec3 _center, glm::vec1 _halfLength) {
+Octree::Octree(Octree* _parent, glm::vec3 _center, glm::vec1 _halfLength) {
 	parent = _parent;
 	center = _center;
 	halfLength = _halfLength;
@@ -13,19 +13,23 @@ Octree::Octree(weak_ptr<Octree> _parent, glm::vec3 _center, glm::vec1 _halfLengt
 
 Octree::Octree() 
 {
-	parent = weak_ptr<Octree>();
+	parent = nullptr;
 	center = glm::vec3(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f, 0);
 	halfLength = glm::vec1(ofGetWidth() / 2.0f);
 }
 
 
-weak_ptr<Octree> Octree::add(const Actor &a) {
-	if (a.position.x < center.x + halfLength.x &&
-		a.position.x > center.x - halfLength.x &&
-		a.position.y < center.y + halfLength.x &&
-		a.position.y > center.y - halfLength.x &&
-		a.position.z < center.z + halfLength.x &&
-		a.position.z > center.z - halfLength.x
+Octree* Octree::add(const Actor &a) {
+	if (this == nullptr)
+	{
+		cout << "aaaaah\n";
+	}
+	if (a.position.x <= center.x + halfLength.x &&
+		a.position.x >= center.x - halfLength.x &&
+		a.position.y <= center.y + halfLength.x &&
+		a.position.y >= center.y - halfLength.x &&
+		a.position.z <= center.z + halfLength.x &&
+		a.position.z >= center.z - halfLength.x
 		)
 	{
 		if(children.size() == 0)
@@ -46,77 +50,78 @@ weak_ptr<Octree> Octree::add(const Actor &a) {
 									y*quarterLength.x,
 									z*quarterLength.x
 								);
-							auto child = make_shared<Octree>(weak_from_this(), childCenter, quarterLength);
-							children.push_back(child);
+							children.push_back(make_unique<Octree>(this, childCenter, quarterLength));
 						}
 					}
 				}
 
-				// children now go to new leaves
-				for (int i = 0; i < 8; i++)
+				// actors in current node are added to children nodes
+				for (int i = 0; i < children.size(); i++)
 				{
 					auto child = this->add(*actors[i]);
-					if (!child.expired())
+					actors[i]->spatialImage = child;
+					/*
+					if (child != nullptr)
 					{
 						actors[i]->spatialImage = child;
 						break;
 					}
+					*/
 				}
 				actors.clear();
-
 				return this->add(a);
 			}
 			else if (true)
 			{
-				// push_back
+				// less than 8 actors in this node so far
 				Actor* b = (Actor*)&a;
 				actors.push_back(b);
-				//actors.push_back(&a);
-				return weak_from_this();
+				return this;
 			}
 		}
 		else
 		{
-			for (int i = 0; i < 8; i++)
+			// children nodes exist
+			for (int i = 0; i < children.size(); i++)
 			{
-				auto child_return = children[i]->add(a);
-				// channges this?
-				if (!child_return.expired())
+				Octree* child_return = children[i]->add(a);
+				if(child_return != nullptr)
 					return child_return;
 			}
+			cout << "uh oh\n";
 		}
 	}
 	else
-		return weak_ptr<Octree>();
+		return nullptr;
 }
 
 void Octree::deconstruct() 
 {
-	if (children.size() > 0)
+	
+	for (int i = 0; i < children.size(); i++)
 	{
-		for (int i = 0; i < children.size(); i++)
-		{
-			children[i]->deconstruct();
-			children[i].reset();
-		}
+		//children[i]->deconstruct();
+		children[i].reset();
 	}
+	children = vector<unique_ptr<Octree>>();
+
+	/*
 	else
 	{
 		cout << "leaf destroyed\n";
 	}
+	*/
 }
 
 // should only be called from root
 void Octree::reconstruct(const vector<Actor*> &actors)
 {
-	if (!parent.expired()) return;
-	children = vector<shared_ptr<Octree>>();
+	//if (!parent.expired()) return;
 	for each (Actor* a in actors)
 	{
 		auto l = this->add(*a);
 		a->spatialImage = l;
 	}
-	
 }
 
 void Octree::represent()
@@ -128,7 +133,10 @@ void Octree::represent()
 	//ofDrawRectangle(center.x-halfLength.x, center.y-halfLength.x, halfLength.x*2, halfLength.x*2);
 	if (children.size() > 0)
 	{
-		for(int i = 0; i < children.size(); i++)
+		for (int i = 0; i < children.size(); i++)
+		{
+			printf("child index: %d\n", i);
 			children[i]->represent();
+		}
 	}
 }

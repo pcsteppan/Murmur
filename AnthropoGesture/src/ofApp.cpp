@@ -16,8 +16,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	
-	ofBackground(0);
+	ofBackground(108, 104, 103);
 	cam.begin();
 	network.represent();
 	cam.end();

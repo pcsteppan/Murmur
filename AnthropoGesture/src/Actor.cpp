@@ -91,7 +91,7 @@ void Actor::difference(vector<Actor*> &relations) {
 void Actor::represent() {
 	
 	float size = ofMap(position.z, -300, 300, 0.1f, 4.0f);
-	ofSetColor(size*63.0f, 200, 200);
+	ofSetColor(55, 70, 90);
 	ofFill();
 	//ofDrawEllipse(position.x, position.y, size, size);
 	ofDrawCone(position, 2, 3);

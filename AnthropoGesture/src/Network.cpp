@@ -3,13 +3,15 @@
 
 Network::Network() 
 {
+	root = make_unique<Octree>();
 	for (int i = 0; i < pop; i++)
 	{
 		Actor* a = new Actor();
 		actors.push_back(a);
-		auto l = root->add(*a);
-		a->spatialImage = l;
+		//auto l = root->add(*a);
+		//a->spatialImage = l;
 	}
+	root->reconstruct(actors);
 }
 
 void Network::fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results)
@@ -18,6 +20,18 @@ void Network::fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results)
 	{
 		results.push_back(actors[i]);
 	}
+}
+
+void Network::octreeNearestActorSearch(Actor* a, vector<Actor*> &results)
+{
+	results = ((a->spatialImage)->actors);
+	
+	/*
+	for (int i = 0; i < ((a->spatialImage)->children).size(); i++)
+	{
+		results.push_back(actors[i]);
+	}
+	*/
 }
 
 void Network::difference() 
@@ -31,7 +45,7 @@ void Network::difference()
 	//root.reset(new Octree);
 	//root = make_shared<Octree>(weak_ptr<Octree>(), glm::vec3(ofGetWidth() / 2, ofGetHeight() / 2, 0), glm::vec1(ofGetWidth() / 2));
 	root->deconstruct();
-	root.reset(new Octree);
+	//root.reset(new Octree);
 	root->reconstruct(actors);
 }
 
