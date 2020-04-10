@@ -24,14 +24,19 @@ void Network::fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results)
 
 void Network::octreeNearestActorSearch(Actor* a, vector<Actor*> &results)
 {
-	results = ((a->spatialImage)->actors);
-	
-	/*
-	for (int i = 0; i < ((a->spatialImage)->children).size(); i++)
+	if (a->spatialImage == nullptr)
 	{
-		results.push_back(actors[i]);
+		cout << "hmmm\n";
 	}
-	*/
+	else
+	{
+		vector<Actor*>* neighbors = &((a->spatialImage)->actors);
+	
+		for (int i = 0; i < neighbors->size(); i++)
+		{
+			results.push_back(neighbors->at(i));
+		}
+	}
 }
 
 void Network::difference() 
@@ -39,7 +44,8 @@ void Network::difference()
 	for (int i = 0; i < actors.size(); i++)
 	{
 		vector<Actor*> results;
-		fixedRadiusNearestActorSearch(actors[i], results);
+		//fixedRadiusNearestActorSearch(actors[i], results);
+		octreeNearestActorSearch(actors[i], results);
 		actors[i]->difference(results);
 	}
 	//root.reset(new Octree);
@@ -51,9 +57,11 @@ void Network::difference()
 
 void Network::represent() 
 {
+	
 	for (int i = 0; i < actors.size(); i++)
 	{
 		actors[i]->represent();
 	}
+	ofSetColor(102, 166, 199, 10);
 	root->represent();
 }

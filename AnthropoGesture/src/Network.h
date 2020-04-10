@@ -20,7 +20,7 @@ class Network {
 	Octree octree(min, max, cellSize);
 	*/
 	unique_ptr<Octree> root;
-	int pop = 512;
+	int pop = 4096;
 	vector<Actor*> actors;
 	// align, cohere, separate
 	float forceWeights[3];

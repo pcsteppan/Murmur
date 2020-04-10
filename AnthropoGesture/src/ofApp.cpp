@@ -7,16 +7,18 @@ void ofApp::setup(){
 	resc = 1;
 	network = Network();
 	ofSetConeResolution(resr, resh, resc);
+	cam.setTarget(glm::vec3(ofGetWidth() / 2, ofGetHeight() / 2, 0));
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 	network.difference();
+	printf("framerate: %f\n", ofGetFrameRate());
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofBackground(108, 104, 103);
+	ofBackground(242, 242, 255);
 	cam.begin();
 	network.represent();
 	cam.end();

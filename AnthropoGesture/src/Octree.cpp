@@ -58,7 +58,11 @@ Octree* Octree::add(const Actor &a) {
 				// actors in current node are added to children nodes
 				for (int i = 0; i < children.size(); i++)
 				{
-					auto child = this->add(*actors[i]);
+					auto child = this->add(*(actors[i]));
+					if (child == nullptr)
+					{
+						cout << "hmmm\n";
+					}
 					actors[i]->spatialImage = child;
 					/*
 					if (child != nullptr)
@@ -89,6 +93,7 @@ Octree* Octree::add(const Actor &a) {
 					return child_return;
 			}
 			cout << "uh oh\n";
+			return nullptr;
 		}
 	}
 	else
@@ -120,6 +125,10 @@ void Octree::reconstruct(const vector<Actor*> &actors)
 	for each (Actor* a in actors)
 	{
 		auto l = this->add(*a);
+		if (l == nullptr)
+		{
+			cout << "hmmm\n";
+		}
 		a->spatialImage = l;
 	}
 }
@@ -135,7 +144,7 @@ void Octree::represent()
 	{
 		for (int i = 0; i < children.size(); i++)
 		{
-			printf("child index: %d\n", i);
+			//printf("child index: %d\n", i);
 			children[i]->represent();
 		}
 	}
