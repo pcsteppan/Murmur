@@ -2,14 +2,12 @@
 #include "Octree.h"
 #include "Actor.h"
 
-Octree::Octree(Octree* _parent, glm::vec3 _center, glm::vec1 _halfLength) {
+Octree::Octree(Octree* _parent, glm::vec3 _center, glm::vec1 _halfLength)
+{
 	parent = _parent;
 	center = _center;
 	halfLength = _halfLength;
-	//nodes++;
-	//actors = vector<Actor*>(8);
 }
-
 
 Octree::Octree() 
 {
@@ -18,12 +16,8 @@ Octree::Octree()
 	halfLength = glm::vec1(ofGetWidth() / 2.0f);
 }
 
-
-Octree* Octree::add(const Actor &a) {
-	if (this == nullptr)
-	{
-		cout << "aaaaah\n";
-	}
+Octree* Octree::add(const Actor &a)
+{
 	if (a.position.x <= center.x + halfLength.x &&
 		a.position.x >= center.x - halfLength.x &&
 		a.position.y <= center.y + halfLength.x &&
@@ -59,18 +53,7 @@ Octree* Octree::add(const Actor &a) {
 				for (int i = 0; i < children.size(); i++)
 				{
 					auto child = this->add(*(actors[i]));
-					if (child == nullptr)
-					{
-						cout << "hmmm\n";
-					}
 					actors[i]->spatialImage = child;
-					/*
-					if (child != nullptr)
-					{
-						actors[i]->spatialImage = child;
-						break;
-					}
-					*/
 				}
 				actors.clear();
 				return this->add(a);
@@ -102,20 +85,9 @@ Octree* Octree::add(const Actor &a) {
 
 void Octree::deconstruct() 
 {
-	
 	for (int i = 0; i < children.size(); i++)
-	{
-		//children[i]->deconstruct();
 		children[i].reset();
-	}
 	children = vector<unique_ptr<Octree>>();
-
-	/*
-	else
-	{
-		cout << "leaf destroyed\n";
-	}
-	*/
 }
 
 // should only be called from root
@@ -125,10 +97,6 @@ void Octree::reconstruct(const vector<Actor*> &actors)
 	for each (Actor* a in actors)
 	{
 		auto l = this->add(*a);
-		if (l == nullptr)
-		{
-			cout << "hmmm\n";
-		}
 		a->spatialImage = l;
 	}
 }
@@ -137,14 +105,10 @@ void Octree::represent()
 {
 	ofNoFill();
 	ofDrawBox(center, halfLength.x*2, halfLength.x * 2, halfLength.x * 2);
-
-	
-	//ofDrawRectangle(center.x-halfLength.x, center.y-halfLength.x, halfLength.x*2, halfLength.x*2);
 	if (children.size() > 0)
 	{
 		for (int i = 0; i < children.size(); i++)
 		{
-			//printf("child index: %d\n", i);
 			children[i]->represent();
 		}
 	}

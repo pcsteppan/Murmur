@@ -12,15 +12,18 @@ class Actor
 	void represent();
 	void difference(const vector<Actor*> &relations);
 	void boundInSpace();
+	void applyForce(glm::vec3 force);
+	glm::vec3 seek(glm::vec3 targer);
+	
 
 	glm::vec3 position;
 	glm::vec3 velocity;
 	glm::vec3 acceleration;
 	Octree* spatialImage;
-	const float forceWeights[3] = { 1.00, 1.10, 1.29 };
-	const float forceThresholds[3] = { 200.0, 200.0, 40.0 };
-	const float maxSpeed = 12.0;
-	const float maxForce = 0.4;
+	const float forceWeights[3] = { 1.0f, 1.0f, 1.5f };
+	const float forceThresholds[3] = { 50.0f, 50.0f, 20.0f };
+	const float maxSpeed = 8.0f;
+	const float maxForce = 0.05f;
 	Actor();
 };
 

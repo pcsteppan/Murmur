@@ -57,7 +57,6 @@ void Network::difference()
 
 void Network::represent() 
 {
-	
 	for (int i = 0; i < actors.size(); i++)
 	{
 		actors[i]->represent();
