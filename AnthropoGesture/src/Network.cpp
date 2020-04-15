@@ -32,10 +32,13 @@ void Network::octreeNearestActorSearch(Actor* a, vector<Actor*> &results)
 	{
 		vector<Actor*>* neighbors = &((a->spatialImage)->actors);
 	
+		results.reserve(results.size() + neighbors->size());
+		results.insert(results.begin(), neighbors->begin(), neighbors->end());
+		/*
 		for (int i = 0; i < neighbors->size(); i++)
 		{
 			results.push_back(neighbors->at(i));
-		}
+		}*/
 	}
 }
 
@@ -60,6 +63,7 @@ void Network::represent()
 	for (int i = 0; i < actors.size(); i++)
 	{
 		actors[i]->represent();
+		
 	}
 	ofSetColor(102, 166, 199, 10);
 	root->represent();

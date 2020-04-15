@@ -8,10 +8,8 @@ class Network {
 	void difference();
 	void represent();
 
-	
-	// variables
-	void Network::fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results);
-	void Network::octreeNearestActorSearch(Actor* a, vector<Actor*> &results);
+	void fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results);
+	void octreeNearestActorSearch(Actor* a, vector<Actor*> &results);
 
 	/*
 	float min[3] = { 0.0f, 0.0f, 0.0f };
@@ -19,8 +17,9 @@ class Network {
 	float cellSize[3] = { 0.1, 0.1, 0.1 };
 	Octree octree(min, max, cellSize);
 	*/
+	// variables
 	unique_ptr<Octree> root;
-	int pop = 4096;
+	int pop = 2048;
 	vector<Actor*> actors;
 	// align, cohere, separate
 	float forceWeights[3];

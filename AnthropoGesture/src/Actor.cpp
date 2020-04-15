@@ -81,6 +81,9 @@ void Actor::difference(const vector<Actor*> &relations) {
 		}
 	}
 
+	float f_mx = ofMap(ofGetMouseX() , 0, ofGetWidth(), 0.0f, 1.0f);
+	applyForce(f_mx*seek(glm::vec3(ofGetWidth() / 2, ofGetHeight() / 2, 0)));
+
 	velocity += acceleration;
 	if (glm::length(velocity) > maxSpeed)
 		velocity = glm::normalize(velocity) * maxSpeed;
@@ -107,8 +110,10 @@ void Actor::represent() {
 	ofFill();
 	//ofDrawEllipse(position.x, position.y, size, size);
 	//ofDrawCone(position, 3, 4);
-	//ofDrawArrow(position, position + velocity, 0.5f);
-	ofDrawLine(position, position+velocity);
+	ofDrawArrow(position, position + velocity, 0.5f);
+	//ofDrawPlane(position, 30, 10);
+	
+	//ofDrawLine(position, position+velocity);
 }
 
 void Actor::boundInSpace() {
