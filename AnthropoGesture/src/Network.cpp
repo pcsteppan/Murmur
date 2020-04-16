@@ -4,12 +4,11 @@
 Network::Network() 
 {
 	root = make_unique<Octree>();
+	actors.reserve(pop);
 	for (int i = 0; i < pop; i++)
 	{
 		Actor* a = new Actor();
 		actors.push_back(a);
-		//auto l = root->add(*a);
-		//a->spatialImage = l;
 	}
 	root->reconstruct(actors);
 }
