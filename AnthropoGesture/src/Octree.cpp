@@ -108,7 +108,7 @@ void Octree::reconstruct(const vector<Actor*> &actors)
 void Octree::represent()
 {
 	ofNoFill(); 
-	ofSetColor(102, 166, 199, 10);
+	//ofSetColor(102, 166, 199, 10);
 	ofDrawBox(center, halfLength.x*2, halfLength.x * 2, halfLength.x * 2);
 	if (children.size() > 0)
 	{

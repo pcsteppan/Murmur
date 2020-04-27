@@ -24,20 +24,13 @@ void Network::fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results)
 void Network::octreeNearestActorSearch(Actor* a, vector<Actor*> &results)
 {
 	if (a->spatialImage == nullptr)
-	{
 		cout << "hmmm\n";
-	}
 	else
 	{
 		vector<Actor*>* neighbors = &((a->spatialImage)->actors);
 	
 		results.reserve(results.size() + neighbors->size());
 		results.insert(results.begin(), neighbors->begin(), neighbors->end());
-		/*
-		for (int i = 0; i < neighbors->size(); i++)
-		{
-			results.push_back(neighbors->at(i));
-		}*/
 	}
 }
 
@@ -59,11 +52,21 @@ void Network::difference()
 
 void Network::represent() 
 {
+	float w = (sin(ofMap(ofGetFrameNum() % 240, 0, 240, 0, TWO_PI))+1)*127.5f;
+	ofColor c(0,0,0,12);
+
+	
+	//ofMesh mesh;
+	//mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
 	for (int i = 0; i < actors.size(); i++)
 	{
-		actors[i]->represent();
-		
+		actors[i]->represent(c);
+		//mesh.addVertex(actors[i]->position);
+		//mesh.addTexCoord(glm::vec2(actors[i]->position.x, actors[i]->position.y));
 	}
-	ofSetColor(102, 166, 199, 10);
+	//mesh.draw();
+
+	//ofSetColor(102, 166, 199, 10);
+	ofSetColor(255,255,255,12);
 	root->represent();
 }

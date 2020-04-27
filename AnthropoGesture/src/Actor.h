@@ -9,7 +9,7 @@ class Octree;
 class Actor
 {
 	public:
-	void represent();
+	void represent(ofColor c);
 	void difference(const vector<Actor*> &relations);
 	void boundInSpace();
 	void applyForce(glm::vec3 force);

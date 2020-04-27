@@ -104,13 +104,15 @@ glm::vec3 Actor::seek(glm::vec3 target)
 	return steer;
 }
 
-void Actor::represent() {
+void Actor::represent(ofColor c) {
 	float size = ofMap(position.z, -300, 300, 0.1f, 4.0f);
-	ofSetColor(0, 0, 0);
+	ofSetColor(c);
 	ofFill();
 	//ofDrawEllipse(position.x, position.y, size, size);
 	//ofDrawCone(position, 3, 4);
-	ofDrawArrow(position, position + velocity, 0.5f);
+	//ofDrawArrow(position, position + velocity, 0.5f);
+	//ofDrawArrow(position - velocity*5, position, 0.3f);
+	ofDrawLine(position - velocity * 5, position);
 	//ofDrawPlane(position, 30, 10);
 	
 	//ofDrawLine(position, position+velocity);

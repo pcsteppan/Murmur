@@ -24,6 +24,7 @@ class ofApp : public ofBaseApp{
 		
 		Network network;
 		ofEasyCam cam;
+		ofTexture mTex;
 
 		int resr, resh, resc;
 };

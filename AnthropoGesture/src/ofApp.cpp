@@ -8,19 +8,30 @@ void ofApp::setup(){
 	network = Network();
 	ofSetConeResolution(resr, resh, resc);
 	cam.setTarget(glm::vec3(ofGetWidth() / 2, ofGetHeight() / 2, 0));
+	ofSetBackgroundAuto(false);
+	ofBackground(255,255,255);
+	ofSetFrameRate(60);
+
+	//ofDisableArbTex();
+	//ofLoadImage(mTex, "mTex1.png");
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 	network.difference();
 	printf("framerate: %f\n", ofGetFrameRate());
+
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	ofBackground(245, 245, 255, 10);
+	//ofBackground(245, 245, 255);
 	cam.begin();
+
+	//mTex.bind();
 	network.represent();
+	//mTex.unbind();
+
 	cam.end();
 	//ofDrawEllipse(mouseX, mouseY, 20, 20);
 	//ofSleepMillis(8000);
@@ -28,7 +39,7 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+	ofBackground(255, 255, 255);
 }
 
 //--------------------------------------------------------------
