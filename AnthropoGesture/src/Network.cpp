@@ -38,6 +38,7 @@ void Network::difference()
 {
 	for (int i = 0; i < actors.size(); i++)
 	{
+		actors[i]->updateFactors(forceWeights, forceRadii);
 		vector<Actor*> results;
 		//fixedRadiusNearestActorSearch(actors[i], results);
 		octreeNearestActorSearch(actors[i], results);
@@ -50,10 +51,23 @@ void Network::difference()
 	root->reconstruct(actors);
 }
 
-void Network::represent() 
+void Network::updateFactors(float wa, float wc, float ws, float wcp, float ra, float rc, float rs)
+{
+	forceWeights[0] = wa;
+	forceWeights[1] = wc;
+	forceWeights[2] = ws;
+	forceWeights[3] = wcp;
+
+	forceRadii[0] = ra;
+	forceRadii[1] = rc;
+	forceRadii[2] = rs;
+}
+
+
+void Network::represent(bool bDrawOctree) 
 {
 	float w = (sin(ofMap(ofGetFrameNum() % 240, 0, 240, 0, TWO_PI))+1)*127.5f;
-	ofColor c(0,0,0,12);
+	ofColor c(0,0,0,255);
 
 	
 	//ofMesh mesh;
@@ -67,6 +81,6 @@ void Network::represent()
 	//mesh.draw();
 
 	//ofSetColor(102, 166, 199, 10);
-	ofSetColor(255,255,255,12);
-	root->represent();
+	ofSetColor(255,255,255,100);
+	if(bDrawOctree) root->represent();
 }

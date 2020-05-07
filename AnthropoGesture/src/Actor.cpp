@@ -3,9 +3,15 @@
 #include "Octree.h"
 
 Actor::Actor() {
+	/*
 	position = glm::vec3((rand() % (ofGetWidth() - 20)) + 10,
 		(rand() % (ofGetHeight() - 20)) + 10,
-		(rand() % (600-20)) - 300 + 10);
+		(rand() % (600 - 20)) - 300 + 10);
+		*/
+	position = glm::vec3(ofRandom(-3820, 3820),
+		ofRandom(-3820, 3820),
+		ofRandom(-3820, 3820));
+
 	//position = glm::vec3(0, 0, 0);
 	velocity = glm::vec3(rand() % 4 - 2, rand() % 4 - 2, (rand() % 4) - 2);
 
@@ -27,13 +33,13 @@ void Actor::difference(const vector<Actor*> &relations) {
 			if (distanceBetweenActors == 0) continue;
 
 			//align
-			if (distanceBetweenActors < forceThresholds[0])
+			if (distanceBetweenActors < forceRadii[0])
 			{
 				forces[0] += relations[i]->velocity;
 				counts[0]++;
 			}
 			//cohere
-			if (distanceBetweenActors < forceThresholds[1])
+			if (distanceBetweenActors < forceRadii[1])
 			{
 				// force to cohere is inverse to distance?
 				//glm::vec3 inverseDifference = glm::scale(differenceBetweenActors, 1./distanceBetweenActors);
@@ -41,7 +47,7 @@ void Actor::difference(const vector<Actor*> &relations) {
 				counts[1]++;
 			}
 			//separate
-			if (distanceBetweenActors < forceThresholds[2])
+			if (distanceBetweenActors < forceRadii[2])
 			{
 				forces[2] += glm::normalize(differenceBetweenActors)/distanceBetweenActors;
 				counts[2]++;
@@ -81,8 +87,8 @@ void Actor::difference(const vector<Actor*> &relations) {
 		}
 	}
 
-	float f_mx = ofMap(ofGetMouseX() , 0, ofGetWidth(), 0.0f, 1.0f);
-	applyForce(f_mx*seek(glm::vec3(ofGetWidth() / 2, ofGetHeight() / 2, 0)));
+	//float f_mx = ofMap(ofGetMouseX() , 0, ofGetWidth(), 0.0f, 1.0f);
+	applyForce(forceWeights[3]*seek(glm::vec3(0,0,0)));
 
 	velocity += acceleration;
 	if (glm::length(velocity) > maxSpeed)
@@ -118,7 +124,19 @@ void Actor::represent(ofColor c) {
 	//ofDrawLine(position, position+velocity);
 }
 
+void Actor::updateFactors(float* pForceWeights, float* pForceRadii) {
+	forceWeights[0] = pForceWeights[0];
+	forceWeights[1] = pForceWeights[1];
+	forceWeights[2] = pForceWeights[2];
+	forceWeights[3] = pForceWeights[3];
+
+	forceRadii[0] = pForceRadii[0];
+	forceRadii[1] = pForceRadii[1];
+	forceRadii[2] = pForceRadii[2];
+}
+
 void Actor::boundInSpace() {
+	/*
 	if (position.x > ofGetWidth())
 		position.x = 10;
 	if (position.x < 0)
@@ -131,6 +149,19 @@ void Actor::boundInSpace() {
 		position.z = -ofGetHeight()/2 + 10;
 	if (position.z < -ofGetHeight()/2)
 		position.z = ofGetHeight()/2 - 10;
+		*/
+	if (position.x > 3820)
+		position.x = -3810;
+	if (position.x < -3820)
+		position.x = 3820 - 10;
+	if (position.y > 3820)
+		position.y = -3810;
+	if (position.y < -3820)
+		position.y = 3810;
+	if (position.z > 3820)
+		position.z = -3810;
+	if (position.z < -3820)
+		position.z = 3810;
 }
 
 void Actor::applyForce(glm::vec3 force)

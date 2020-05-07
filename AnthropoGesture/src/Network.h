@@ -6,11 +6,12 @@
 class Network {
 	public:
 	void difference();
-	void represent();
+	void represent(bool bDrawOctree);
 
 	void fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results);
 	void octreeNearestActorSearch(Actor* a, vector<Actor*> &results);
-
+	void updateFactors(float wa, float wc, float ws, float wcp, float ra, float rc, float rs);
+	
 	/*
 	float min[3] = { 0.0f, 0.0f, 0.0f };
 	float max[3] = { 1.0f + EPSIOLON, 1.0f + EPSIOLON, 1.0f + EPSIOLON };
@@ -22,8 +23,8 @@ class Network {
 	int pop = 8192;
 	vector<Actor*> actors;
 	// align, cohere, separate
-	float forceWeights[3];
-	float forceThresholds[3];
+	float forceWeights[4];
+	float forceRadii[3];
 	Network();
 };
 

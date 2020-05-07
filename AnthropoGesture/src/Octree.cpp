@@ -14,8 +14,8 @@ Octree::Octree(Octree* _parent, glm::vec3 _center, glm::vec1 _halfLength, short 
 Octree::Octree() 
 {
 	parent = nullptr;
-	center = glm::vec3(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f, 0);
-	halfLength = glm::vec1(ofGetWidth() / 2.0f);
+	center = glm::vec3(0,0,0);
+	halfLength = glm::vec1(3840);
 	kidNumber = -1;
 	actors.reserve(8);
 }

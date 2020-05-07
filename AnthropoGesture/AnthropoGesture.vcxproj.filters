@@ -10,6 +10,42 @@
     <ClCompile Include="src\Network.cpp" />
     <ClCompile Include="src\Actor.cpp" />
     <ClCompile Include="src\Octree.cpp" />
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxFastFboReader\src\ofxFastFboReader.cpp">
+      <Filter>addons\ofxFastFboReader\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxFFmpegRecorder\src\ofxFFmpegRecorder.cpp">
+      <Filter>addons\ofxFFmpegRecorder\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxBaseGui.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxButton.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxColorPicker.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxGuiGroup.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxInputField.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxLabel.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxPanel.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxSlider.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxSliderGroup.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxToggle.cpp">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -17,6 +53,24 @@
     </Filter>
     <Filter Include="addons">
       <UniqueIdentifier>{7a398d6d-4651-4cf6-883a-d49e84f2e69b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFastFboReader">
+      <UniqueIdentifier>{b586827f-98bc-42bc-a00a-363f7aed8eda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFastFboReader\src">
+      <UniqueIdentifier>{a6db6673-c79d-4ea9-b8fb-c3c8b09307f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFFmpegRecorder">
+      <UniqueIdentifier>{67f16e8a-4432-4431-98c2-9184d41d1355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxFFmpegRecorder\src">
+      <UniqueIdentifier>{4d3fda83-05a7-4602-b30e-972a8124c43b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGui">
+      <UniqueIdentifier>{ed385906-0b54-45a1-b595-9efa9660841b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGui\src">
+      <UniqueIdentifier>{8f6eb336-03b6-41d1-a4d0-e770169c7a8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +80,48 @@
     <ClInclude Include="src\Network.h" />
     <ClInclude Include="src\Actor.h" />
     <ClInclude Include="src\Octree.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxFastFboReader\src\ofxFastFboReader.h">
+      <Filter>addons\ofxFastFboReader\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxFFmpegRecorder\src\ofxFFmpegRecorder.h">
+      <Filter>addons\ofxFFmpegRecorder\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxBaseGui.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxButton.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxColorPicker.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxGui.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxGuiGroup.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxGuiUtils.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxInputField.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxLabel.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxPanel.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxSlider.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxSliderGroup.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\..\dev\of_v0.11.0_vs2017_release\addons\ofxGui\src\ofxToggle.h">
+      <Filter>addons\ofxGui\src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
