@@ -13,12 +13,15 @@ void ofApp::setup(){
 
 	// RECORDING SETUP
 	// m_Grabber.setup(3840, 2160);
-	m_Fbo.allocate(3840, 2160, GL_RGBA, 2);
+	// ffmpeg recorder fbo can't use anti-aliasing it seems?
+	// which would be the fourth argument after GL_RGB
+	// like 2, which would make the lines smooth instead of pixellated
+	m_Fbo.allocate(1920, 1080, GL_RGB);
 	m_Recorder.setup(true, false, glm::vec2(m_Fbo.getWidth(), m_Fbo.getHeight()));
 	m_Recorder.setOverWrite(true);
 	//m_Recorder.setVideoCodec("mjpeg");
 	m_Recorder.setFps(30);
-	//m_Recorder.setBitRate(39062);
+	m_Recorder.setBitRate(6000);
 
 	// EASYCAM SETUP
 	cam.setTarget(glm::vec3(0,0,0));
@@ -72,7 +75,11 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	m_Fbo.begin();
-	if(bClearImage) ofBackground(255, 255, 255);
+	
+	if (bClearImage) {
+		ofClear(255, 255, 255);
+		ofBackground(255, 255, 255);
+	}
 	cam.begin();
 
 	network.represent(bDrawOctree);
@@ -91,16 +98,13 @@ void ofApp::draw(){
 
 	if (!bHide) {
 		gui.draw();
-		ofDrawBitmapStringHighlight(std::to_string(m_Recorder.getRecordedDuration()), 40, 45);
-		ofDrawBitmapStringHighlight("FPS: " + std::to_string(ofGetFrameRate()), 10, 16);
+		ofDrawBitmapStringHighlight(std::to_string(m_Recorder.getRecordedDuration()), ofGetWidth()-140, 45);
+		ofDrawBitmapStringHighlight("FPS: " + std::to_string(ofGetFrameRate()), ofGetWidth()-100, 16);
 	}
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	m_Fbo.begin();
-	ofClear(255, 255, 255);
-	m_Fbo.end();
 }
 
 //--------------------------------------------------------------

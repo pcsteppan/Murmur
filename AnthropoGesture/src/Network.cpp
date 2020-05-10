@@ -74,6 +74,7 @@ void Network::represent(bool bDrawOctree)
 	//mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
 	for (int i = 0; i < actors.size(); i++)
 	{
+		// change color to be a map of distance to camera
 		actors[i]->represent(c);
 		//mesh.addVertex(actors[i]->position);
 		//mesh.addTexCoord(glm::vec2(actors[i]->position.x, actors[i]->position.y));
