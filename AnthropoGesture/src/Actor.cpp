@@ -150,10 +150,10 @@ void Actor::boundInSpace() {
 	if (position.z < -ofGetHeight()/2)
 		position.z = ofGetHeight()/2 - 10;
 		*/
-	if (position.x > 3820)
-		position.x = -3810;
-	if (position.x < -3820)
-		position.x = 3820 - 10;
+	if (position.x > 600)
+		position.x = -590;
+	if (position.x < -560)
+		position.x = 560 - 10;
 	if (position.y > 3820)
 		position.y = -3810;
 	if (position.y < -3820)

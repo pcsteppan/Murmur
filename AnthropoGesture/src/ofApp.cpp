@@ -16,12 +16,12 @@ void ofApp::setup(){
 	// ffmpeg recorder fbo can't use anti-aliasing it seems?
 	// which would be the fourth argument after GL_RGB
 	// like 2, which would make the lines smooth instead of pixellated
-	m_Fbo.allocate(1920, 1080, GL_RGB);
+	m_Fbo.allocate(1920, 1080, GL_RGBA);
 	m_Recorder.setup(true, false, glm::vec2(m_Fbo.getWidth(), m_Fbo.getHeight()));
 	m_Recorder.setOverWrite(true);
 	//m_Recorder.setVideoCodec("mjpeg");
 	m_Recorder.setFps(30);
-	m_Recorder.setBitRate(6000);
+	m_Recorder.setBitRate(20000);
 
 	// EASYCAM SETUP
 	cam.setTarget(glm::vec3(0,0,0));
@@ -77,8 +77,8 @@ void ofApp::draw(){
 	m_Fbo.begin();
 	
 	if (bClearImage) {
-		ofClear(255, 255, 255);
-		ofBackground(255, 255, 255);
+		ofClear(255, 255, 255, 5);
+		//ofBackground(255, 255, 255);
 	}
 	cam.begin();
 
