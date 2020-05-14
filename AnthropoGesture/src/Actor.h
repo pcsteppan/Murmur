@@ -27,6 +27,8 @@ class Actor
 	float forceRadii[3] = { 150.0f, 270.0f, 60.0f };
 	const float maxSpeed = 24.0f;
 	const float maxForce = 0.13f;
+	const int cube_size = 1910;
+	const int cube_size_o = 1900;
 	Actor();
 };
 

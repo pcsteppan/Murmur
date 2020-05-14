@@ -87,8 +87,9 @@ void Actor::difference(const vector<Actor*> &relations) {
 		}
 	}
 
-	//float f_mx = ofMap(ofGetMouseX() , 0, ofGetWidth(), 0.0f, 1.0f);
-	applyForce(forceWeights[3]*seek(glm::vec3(0,0,0)));
+	//float f_mx = ofMap(ofGetMouseX() , 0, ofGetWidth(), 0.0f, 1.0f); 
+	float inverse_distance = glm::length(position) / cube_size;
+	applyForce(forceWeights[3] * inverse_distance * seek(glm::vec3(0,0,0)));
 
 	velocity += acceleration;
 	if (glm::length(velocity) > maxSpeed)
@@ -150,18 +151,26 @@ void Actor::boundInSpace() {
 	if (position.z < -ofGetHeight()/2)
 		position.z = ofGetHeight()/2 - 10;
 		*/
+	
+
+	if (position.x > cube_size)
+		position.x = -cube_size_o;
+	if (position.x < -cube_size)
+		position.x = cube_size_o;
+	/*
 	if (position.x > 600)
 		position.x = -590;
 	if (position.x < -560)
 		position.x = 560 - 10;
-	if (position.y > 3820)
-		position.y = -3810;
-	if (position.y < -3820)
-		position.y = 3810;
-	if (position.z > 3820)
-		position.z = -3810;
-	if (position.z < -3820)
-		position.z = 3810;
+	*/
+	if (position.y > cube_size)
+		position.y = -cube_size_o;
+	if (position.y < -cube_size)
+		position.y = cube_size_o;
+	if (position.z > cube_size)
+		position.z = -cube_size_o;
+	if (position.z < -cube_size)
+		position.z = cube_size_o;
 }
 
 void Actor::applyForce(glm::vec3 force)

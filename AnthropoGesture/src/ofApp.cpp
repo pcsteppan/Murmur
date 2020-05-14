@@ -21,7 +21,7 @@ void ofApp::setup(){
 	m_Recorder.setOverWrite(true);
 	//m_Recorder.setVideoCodec("mjpeg");
 	m_Recorder.setFps(30);
-	m_Recorder.setBitRate(20000);
+	m_Recorder.setBitRate(2000);
 
 	// EASYCAM SETUP
 	cam.setTarget(glm::vec3(0,0,0));
