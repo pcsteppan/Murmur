@@ -8,7 +8,7 @@ class Network {
 	void difference();
 	void represent(bool bDrawOctree);
 
-	void fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results);
+	//void fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results);
 	void octreeNearestActorSearch(Actor* a, vector<Actor*> &results);
 	void updateFactors(float wa, float wc, float ws, float wcp, float ra, float rc, float rs);
 	
@@ -20,7 +20,7 @@ class Network {
 	*/
 	// variables
 	unique_ptr<Octree> root;
-	int pop = 8196*2;
+	int pop = 8196*3;
 	vector<Actor*> actors;
 	// align, cohere, separate
 	float forceWeights[4];

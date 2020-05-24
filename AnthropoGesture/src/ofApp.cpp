@@ -37,11 +37,11 @@ void ofApp::setup(){
 	m_Recorder.setOverWrite(true);
 	//m_Recorder.setVideoCodec("mjpeg");
 	m_Recorder.setFps(30);
-	m_Recorder.setBitRate(2000);
+	m_Recorder.setBitRate(1024*24);
 
 	// EASYCAM SETUP
 	cam.setTarget(glm::vec3(0,0,0));
-	cam.setFov(110);
+	cam.setFov(120);
 	cam.setFarClip(cam.getFarClip() - 1000);
 	//circleResolution.addListener(this, &ofApp::circleResolutionChanged);
 	//ringButton.addListener(this, &ofApp::ringButtonPressed);
@@ -94,7 +94,7 @@ void ofApp::update(){
 	network.difference();
 	printf("framerate: %f\n", ofGetFrameRate());
 
-	cam.orbit(ofGetElapsedTimef() * 14, 0, 1700, ofVec3f(0, 0, 0));
+	cam.orbit(ofGetElapsedTimef() * 14, 0, 1000, ofVec3f(0, 0, 0));
 	// long (degrees), lat, radius, center pt
 	cam.lookAt(ofVec3f(0, 0, 0));
 	// RECORDING UPDATE

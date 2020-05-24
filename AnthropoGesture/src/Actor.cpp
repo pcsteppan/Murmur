@@ -135,17 +135,15 @@ glm::vec3 Actor::seek(glm::vec3 target)
 void Actor::represent() {
 	float size = ofMap(position.z, -300, 300, 0.1f, 4.0f);
 
-	float camDist = ofMap(glm::distance(cam.getPosition(), this->position), 0, 2000, 0.0f, 1.0f, true);
-	//c.lerp(farColorBoid, camDist);
 	ofColor c = nearColorBoid;
-	c.r = color.r;
-	c.b = color.b;
-	c.g = color.g;
+	float camDist = ofMap(glm::distance(cam.getPosition(), this->position), 0, 2000, 0.0f, 1.0f, true);
+	c.lerp(farColorBoid, camDist);
+	
 	//ofColor c = ofColor(color.r,color.g,color.b);
 
 	//ofColor c = palettePixels.getColor((int)position.x, (int)position.y);
 	//c = ofColor(glm::distance(this->position, p), 0, 0);
-	ofSetColor(color);
+	ofSetColor(c);
 	ofFill();
 	//ofDrawEllipse(position.x, position.y, size, size);
 	//ofDrawCone(position, 3, 4);
