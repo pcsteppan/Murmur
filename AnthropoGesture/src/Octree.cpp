@@ -148,7 +148,8 @@ void Octree::fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results)
 	// return all actors in current node
 	// ask parent for possibly relevant children
 	// current plan: only go up one level
-
+	
+	parent->fixedRadiusNearestActorSearchHelper(a, results, kidNumber);
 }
 
 void Octree::fixedRadiusNearestActorSearchHelper(Actor* a, vector<Actor*> &results, short int kidWhoAsked)
@@ -157,12 +158,14 @@ void Octree::fixedRadiusNearestActorSearchHelper(Actor* a, vector<Actor*> &resul
 	glm::vec3 d = center - a->position;
 	for (int i = 0; i < children.size(); i++)
 	{
+		// if (results.size() > 16) continue;
 		// mask it's 3 component vectors with an XOR operation
 		short int relevantComponentVectorMask = i ^ kidWhoAsked;
 		d.x *= relevantComponentVectorMask & 1;
 		d.y *= (relevantComponentVectorMask >> 1) & 1;
 		d.z *= (relevantComponentVectorMask >> 2) & 1;
-		if (glm::length(d) <= 60.0f)
+		float max_threshold = max(max(a->forceRadii[0], a->forceRadii[1]), a->forceRadii[2]);
+		if (glm::length(d) <= max_threshold)
 		{
 			results.insert(results.end(), (children[i]->actors).begin(), (children[i]->actors).end());
 		}

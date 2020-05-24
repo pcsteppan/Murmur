@@ -1,4 +1,5 @@
 #include <iostream>
+#include "ofApp.h"
 #include "Actor.h"
 #include "Octree.h"
 
@@ -8,9 +9,14 @@ Actor::Actor() {
 		(rand() % (ofGetHeight() - 20)) + 10,
 		(rand() % (600 - 20)) - 300 + 10);
 		*/
-	position = glm::vec3(ofRandom(-3820, 3820),
-		ofRandom(-3820, 3820),
-		ofRandom(-3820, 3820));
+	position = glm::vec3(ofRandom(-cube_size_o, cube_size_o),
+		ofRandom(-cube_size_o, cube_size_o),
+		ofRandom(-cube_size_o, cube_size_o));
+
+	int x = ofMap(position.x, -cube_size, cube_size, 0, 1919, true);
+	int y = ofMap(position.y, -cube_size, cube_size, 0, 1079, true);
+
+	this->color = palettePixels.getColor(x, y);
 
 	//position = glm::vec3(0, 0, 0);
 	velocity = glm::vec3(rand() % 4 - 2, rand() % 4 - 2, (rand() % 4) - 2);
@@ -20,7 +26,18 @@ Actor::Actor() {
 	acceleration = glm::vec3(0,0,0);
 }
 
+void Actor::colorSetup() {
+	int x = ofMap(position.x, -cube_size, cube_size, 0, 1919, true);
+	int y = ofMap(position.y, -cube_size, cube_size, 0, 1079, true);
+
+	this->color = palettePixels.getColor(x, y);
+}
+
 void Actor::difference(const vector<Actor*> &relations) {
+	// find better way to do this
+	float maxV = maxVelocity;
+	float maxF = maxForce;
+	//
 	if (relations.size() > 0)
 	{
 		glm::vec3 forces[] = { glm::vec3(0,0,0), glm::vec3(0,0,0), glm::vec3(0,0,0) };
@@ -58,10 +75,10 @@ void Actor::difference(const vector<Actor*> &relations) {
 		{
 			forces[0] /= counts[0];
 			forces[0] = glm::normalize(forces[0]);
-			forces[0] *= maxSpeed;
+			forces[0] *= maxV;
 			glm::vec3 steer = forces[0] - velocity;
 			if (glm::length(steer) > maxForce)
-				steer = glm::normalize(steer) * maxForce;
+				steer = glm::normalize(steer) * maxF;
 			applyForce(steer * forceWeights[0]);
 		}
 		if (counts[1] > 0 && forces[1] != glm::vec3(0,0,0))
@@ -73,9 +90,9 @@ void Actor::difference(const vector<Actor*> &relations) {
 		{
 			forces[2] /= counts[2];
 			forces[2] = glm::normalize(forces[2]);
-			forces[2] = forces[2] * maxSpeed - velocity;
+			forces[2] = forces[2] * maxV - velocity;
 			if (glm::length(forces[2]) > maxForce)
-				forces[2] = glm::normalize(forces[2]) * maxForce;
+				forces[2] = glm::normalize(forces[2]) * maxF;
 			applyForce(forces[2] * forceWeights[2]);
 		}
 
@@ -92,8 +109,8 @@ void Actor::difference(const vector<Actor*> &relations) {
 	applyForce(forceWeights[3] * inverse_distance * seek(glm::vec3(0,0,0)));
 
 	velocity += acceleration;
-	if (glm::length(velocity) > maxSpeed)
-		velocity = glm::normalize(velocity) * maxSpeed;
+	if (glm::length(velocity) > maxVelocity)
+		velocity = glm::normalize(velocity) * maxV;
 	position += velocity;
 	acceleration *= 0;
 	this->boundInSpace();
@@ -101,28 +118,43 @@ void Actor::difference(const vector<Actor*> &relations) {
 
 glm::vec3 Actor::seek(glm::vec3 target)
 {
+	// find better way to do this
+	float maxV = maxVelocity;
+	float maxF = maxForce;
+	//
 	glm::vec3 desired = target - position;
-	desired = glm::normalize(desired) * maxSpeed;
+	desired = glm::normalize(desired) * maxV;
 	glm::vec3 steer = desired - velocity;
 	if (glm::length(steer) > maxForce)
 	{
-		steer = glm::normalize(steer) * maxForce;
+		steer = glm::normalize(steer) * maxF;
 	}
 	return steer;
 }
 
-void Actor::represent(ofColor c) {
+void Actor::represent() {
 	float size = ofMap(position.z, -300, 300, 0.1f, 4.0f);
-	ofSetColor(c);
+
+	float camDist = ofMap(glm::distance(cam.getPosition(), this->position), 0, 2000, 0.0f, 1.0f, true);
+	//c.lerp(farColorBoid, camDist);
+	ofColor c = nearColorBoid;
+	c.r = color.r;
+	c.b = color.b;
+	c.g = color.g;
+	//ofColor c = ofColor(color.r,color.g,color.b);
+
+	//ofColor c = palettePixels.getColor((int)position.x, (int)position.y);
+	//c = ofColor(glm::distance(this->position, p), 0, 0);
+	ofSetColor(color);
 	ofFill();
 	//ofDrawEllipse(position.x, position.y, size, size);
 	//ofDrawCone(position, 3, 4);
 	//ofDrawArrow(position, position + velocity, 0.5f);
 	//ofDrawArrow(position - velocity*5, position, 0.3f);
-	ofDrawLine(position - velocity * 5, position);
+	//ofDrawLine(position - velocity * 5, position);
 	//ofDrawPlane(position, 30, 10);
 	
-	//ofDrawLine(position, position+velocity);
+	ofDrawLine(position, position+(velocity+velocity));
 }
 
 void Actor::updateFactors(float* pForceWeights, float* pForceRadii) {
@@ -153,24 +185,24 @@ void Actor::boundInSpace() {
 		*/
 	
 
-	if (position.x > cube_size)
-		position.x = -cube_size_o;
-	if (position.x < -cube_size)
-		position.x = cube_size_o;
+	if (position.x > cube_size*2)
+		position.x = -cube_size_o * 2;
+	if (position.x < -cube_size * 2)
+		position.x = cube_size_o * 2;
 	/*
 	if (position.x > 600)
 		position.x = -590;
 	if (position.x < -560)
 		position.x = 560 - 10;
 	*/
-	if (position.y > cube_size)
-		position.y = -cube_size_o;
-	if (position.y < -cube_size)
-		position.y = cube_size_o;
-	if (position.z > cube_size)
-		position.z = -cube_size_o;
-	if (position.z < -cube_size)
-		position.z = cube_size_o;
+	if (position.y > cube_size * 2)
+		position.y = -cube_size_o * 2;
+	if (position.y < -cube_size * 2)
+		position.y = cube_size_o * 2;
+	if (position.z > cube_size * 2)
+		position.z = -cube_size_o * 2;
+	if (position.z < -cube_size * 2)
+		position.z = cube_size_o * 2;
 }
 
 void Actor::applyForce(glm::vec3 force)

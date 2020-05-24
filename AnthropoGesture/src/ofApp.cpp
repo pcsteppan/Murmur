@@ -1,15 +1,31 @@
 #include "ofApp.h"
 
+ofEasyCam cam;
+ofxColorSlider colorGround;
+ofxColorSlider nearColorBoid;
+ofxColorSlider farColorBoid;
+ofxColorSlider colorGrid;
+ofImage palette;
+ofPixels palettePixels;
+ofxFloatSlider maxForce;
+ofxFloatSlider maxVelocity;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 	resr = 3;
 	resh = 1;
 	resc = 1;
-	network = Network();
+	//network = Network();
 	ofSetConeResolution(resr, resh, resc);
 	ofSetBackgroundAuto(false);
 	ofBackground(255,255,255);
 	ofSetFrameRate(30);
+
+	// PALETTE SETUP
+	palette.load("./images/palette1.png");
+	palettePixels = palette.getPixels();
+
+	network = Network();
 
 	// RECORDING SETUP
 	// m_Grabber.setup(3840, 2160);
@@ -31,26 +47,37 @@ void ofApp::setup(){
 	//ringButton.addListener(this, &ofApp::ringButtonPressed);
 
 	gui.setup(); // most of the time you don't need a name
-	gui.add(radiusAlign.setup("r:align", 200, 0, 500));
-	gui.add(radiusCohere.setup("r:cohere", 200, 0, 500));
-	gui.add(radiusSeparate.setup("r:separate", 200, 0, 500));
 
-	gui.add(weightAlign.setup("w:align", 0.5, 0, 1));
-	gui.add(weightCohere.setup("w:cohere", 0.5, 0, 1));
-	gui.add(weightSeparate.setup("w:separate", 0.5, 0, 1));
-	gui.add(weightCenterPull.setup("w:center", 0, 0, 1));
+	gui.add(cameraAngleDelta.setup("cam-angle diff", { 0, 0, 0 }, { 0, 0, 0 }, { TWO_PI, TWO_PI, TWO_PI }));
+
+	gui.add(radiusAlign.setup("r:align", 300, 0, 500));
+	gui.add(radiusCohere.setup("r:cohere", 400, 0, 500));
+	gui.add(radiusSeparate.setup("r:separate", 80, 0, 500));
+
+	gui.add(maxForce.setup("max force", 0.32f, 0.0f, 0.5f));
+	gui.add(maxVelocity.setup("max velocity", 35.0f, 0.0f, 100.0f));
+
+	gui.add(weightAlign.setup("w:align", 0.85, 0, 1));
+	gui.add(weightCohere.setup("w:cohere", 0.7, 0, 1));
+	gui.add(weightSeparate.setup("w:separate", 1, 0, 1));
+	gui.add(weightCenterPull.setup("w:center", 0.3, 0, 1));
 	//gui.add(filled.setup("fill", true));
 	//gui.add(radius.setup("radius", 140, 10, 300));
 	//gui.add(center.setup("center", { ofGetWidth()*.5, ofGetHeight()*.5 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() }));
-	//gui.add(color.setup("color", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(colorGrid.setup("grid color", ofColor(0), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(farColorBoid.setup("far boid color", ofColor(255, 255, 255, 20), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 100, 100, 20), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(colorGround.setup("ground color", ofColor(0, 0, 0, 20), ofColor(0, 0), ofColor(255, 255)));
+	
+	
+	
 	//gui.add(circleResolution.setup("circle res", 5, 3, 90));
 	//gui.add(twoCircles.setup("two circles"));
 	//gui.add(ringButton.setup("ring"));
 	//gui.add(screenSize.setup("screen size", ofToString(ofGetWidth()) + "x" + ofToString(ofGetHeight())));
 
-	bHide = bDrawOctree = bClearImage = false;
-	
-
+	bHide = bDrawOctree = false;
+	bClearImage = true;
 	//ring.load("ring.wav");
 }
 
@@ -67,9 +94,20 @@ void ofApp::update(){
 	network.difference();
 	printf("framerate: %f\n", ofGetFrameRate());
 
+	cam.orbit(ofGetElapsedTimef() * 14, 0, 1700, ofVec3f(0, 0, 0));
+	// long (degrees), lat, radius, center pt
+	cam.lookAt(ofVec3f(0, 0, 0));
 	// RECORDING UPDATE
-	
-
+	//float latitude = cameraAngleDelta.getFloatSlider("x");
+	//latitude += atan2(cam.getPosition().x, cam.getPosition().y);
+	//float longitude = cameraAngleDelta.getFloatSlider("y");
+	//longitude += atan2(cam.getPosition().y, cam.getPosition().z);
+	//float z = cameraAngleDelta.getFloatSlider("z");
+	//glm::vec3 orientation = cam.getOrientationEulerRad();
+	//cam.orbitRad(0.02, longitude, 400, glm::vec3(0,0,0));
+	//cam.orbitRad((float)((orientation.x*2) % 6), 0.0, 200, glm::vec3(0, 0, 0));
+	//cam.rotateAroundRad(, glm::vec3(0,1,0), glm::vec3(0,0,0));
+	//cam.rotateAroundRad(cameraAngleDelta.getFloatSlider("z"), glm::vec3(0,0,1), glm::vec3(0,0,0));
 }
 
 //--------------------------------------------------------------
@@ -77,7 +115,7 @@ void ofApp::draw(){
 	m_Fbo.begin();
 	
 	if (bClearImage) {
-		ofClear(255, 255, 255, 5);
+		ofClear(colorGround);
 		//ofBackground(255, 255, 255);
 	}
 	cam.begin();

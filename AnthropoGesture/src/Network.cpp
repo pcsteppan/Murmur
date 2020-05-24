@@ -1,5 +1,5 @@
 #include "Network.h"
-
+#include "ofApp.h"
 
 Network::Network() 
 {
@@ -11,14 +11,6 @@ Network::Network()
 		actors.push_back(a);
 	}
 	root->reconstruct(actors);
-}
-
-void Network::fixedRadiusNearestActorSearch(Actor* a, vector<Actor*> &results)
-{
-	for (int i = 0; i < actors.size(); i++)
-	{
-		results.push_back(actors[i]);
-	}
 }
 
 void Network::octreeNearestActorSearch(Actor* a, vector<Actor*> &results)
@@ -40,8 +32,15 @@ void Network::difference()
 	{
 		actors[i]->updateFactors(forceWeights, forceRadii);
 		vector<Actor*> results;
-		//fixedRadiusNearestActorSearch(actors[i], results);
-		octreeNearestActorSearch(actors[i], results);
+		results.reserve(64);
+		actors[i]->spatialImage->fixedRadiusNearestActorSearch(actors[i], results);
+		/*
+		for (int j = 1; j < results.size(); j++)
+		{
+			ofDrawLine(results[j - 1]->position, results[j]->position);
+		}
+		*/
+		//octreeNearestActorSearch(actors[i], results);
 		actors[i]->difference(results);
 	}
 	//root.reset(new Octree);
@@ -67,7 +66,7 @@ void Network::updateFactors(float wa, float wc, float ws, float wcp, float ra, f
 void Network::represent(bool bDrawOctree) 
 {
 	float w = (sin(ofMap(ofGetFrameNum() % 240, 0, 240, 0, TWO_PI))+1)*127.5f;
-	ofColor c(0,0,0,200);
+	ofColor c(255,255,255,160);
 
 	
 	//ofMesh mesh;
@@ -75,13 +74,13 @@ void Network::represent(bool bDrawOctree)
 	for (int i = 0; i < actors.size(); i++)
 	{
 		// change color to be a map of distance to camera
-		actors[i]->represent(c);
+		actors[i]->represent();
 		//mesh.addVertex(actors[i]->position);
 		//mesh.addTexCoord(glm::vec2(actors[i]->position.x, actors[i]->position.y));
 	}
 	//mesh.draw();
 
 	//ofSetColor(102, 166, 199, 10);
-	ofSetColor(255,255,255,100);
+	ofSetColor(10, 10, 10, 80);
 	if(bDrawOctree) root->represent();
 }

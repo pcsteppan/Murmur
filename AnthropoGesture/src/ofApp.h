@@ -7,6 +7,16 @@
 #include "ofxFastFboReader.h"
 #include "ofxGui.h"
 
+extern ofEasyCam cam;
+extern ofxColorSlider nearColorBoid;
+extern ofxColorSlider farColorBoid;
+extern ofxColorSlider colorGround;
+extern ofxColorSlider colorGrid;
+extern ofxFloatSlider maxForce;
+extern ofxFloatSlider maxVelocity;
+extern ofImage palette;
+extern ofPixels palettePixels;
+
 class ofApp : public ofBaseApp{
 
 	public:
@@ -28,7 +38,7 @@ class ofApp : public ofBaseApp{
 		
 	private:
 		Network network;
-		ofEasyCam cam;
+		
 		
 		// RECORDING VARS
 		// ofVideoGrabber m_Grabber;
@@ -55,7 +65,8 @@ class ofApp : public ofBaseApp{
 		ofxFloatSlider weightSeparate;
 		ofxFloatSlider weightCenterPull;
 
-		//ofxColorSlider colorBoid;
+		ofxVec3Slider cameraAngleDelta;
+		
 		//ofxVec2Slider center;
 		//ofxIntSlider circleResolution;
 		//ofxToggle filled;

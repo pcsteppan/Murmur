@@ -20,11 +20,10 @@ class Network {
 	*/
 	// variables
 	unique_ptr<Octree> root;
-	int pop = 8192;
+	int pop = 8196*2;
 	vector<Actor*> actors;
 	// align, cohere, separate
 	float forceWeights[4];
 	float forceRadii[3];
 	Network();
 };
-
