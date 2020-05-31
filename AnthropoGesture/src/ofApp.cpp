@@ -32,7 +32,8 @@ void ofApp::setup(){
 	// ffmpeg recorder fbo can't use anti-aliasing it seems?
 	// which would be the fourth argument after GL_RGB
 	// like 2, which would make the lines smooth instead of pixellated
-	m_Fbo.allocate(1920, 1080, GL_RGBA);
+	//m_Fbo.allocate(1920, 1080, GL_RGBA);
+	m_Fbo.allocate(1920 * 2, 1080 * 2, GL_RGBA);
 	m_Recorder.setup(true, false, glm::vec2(m_Fbo.getWidth(), m_Fbo.getHeight()));
 	m_Recorder.setOverWrite(true);
 	//m_Recorder.setVideoCodec("mjpeg");
@@ -48,7 +49,9 @@ void ofApp::setup(){
 
 	gui.setup(); // most of the time you don't need a name
 
-	gui.add(cameraAngleDelta.setup("cam-angle diff", { 0, 0, 0 }, { 0, 0, 0 }, { TWO_PI, TWO_PI, TWO_PI }));
+	//gui.add(cameraAngleDelta.setup("cam-angle diff", { 0, 0, 0 }, { 0, 0, 0 }, { TWO_PI, TWO_PI, TWO_PI }));
+	gui.add(floatRadius.setup("camera radius", 1000, 500, 1500));
+
 
 	gui.add(radiusAlign.setup("r:align", 300, 0, 500));
 	gui.add(radiusCohere.setup("r:cohere", 400, 0, 500));
@@ -57,16 +60,16 @@ void ofApp::setup(){
 	gui.add(maxForce.setup("max force", 0.32f, 0.0f, 0.5f));
 	gui.add(maxVelocity.setup("max velocity", 35.0f, 0.0f, 100.0f));
 
-	gui.add(weightAlign.setup("w:align", 0.85, 0, 1));
-	gui.add(weightCohere.setup("w:cohere", 0.7, 0, 1));
+	gui.add(weightAlign.setup("w:align", 0.6, 0, 1));
+	gui.add(weightCohere.setup("w:cohere", 0.75, 0, 1));
 	gui.add(weightSeparate.setup("w:separate", 1, 0, 1));
 	gui.add(weightCenterPull.setup("w:center", 0.3, 0, 1));
 	//gui.add(filled.setup("fill", true));
 	//gui.add(radius.setup("radius", 140, 10, 300));
 	//gui.add(center.setup("center", { ofGetWidth()*.5, ofGetHeight()*.5 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() }));
 	gui.add(colorGrid.setup("grid color", ofColor(0), ofColor(0, 0), ofColor(255, 255)));
-	gui.add(farColorBoid.setup("far boid color", ofColor(255, 255, 255, 200), ofColor(0, 0), ofColor(255, 255)));
-	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 100, 100, 200), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(farColorBoid.setup("far boid color", ofColor(255, 255, 255, 40), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 255, 255, 40), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(colorGround.setup("ground color", ofColor(0, 0, 0, 255), ofColor(0, 0), ofColor(255, 255)));
 	
 	
@@ -94,7 +97,13 @@ void ofApp::update(){
 	network.difference();
 	printf("framerate: %f\n", ofGetFrameRate());
 
-	cam.orbit(ofGetElapsedTimef() * 14, 0, 1000, ofVec3f(0, 0, 0));
+	// noise for latitude and longitude
+	
+	
+	float longitude = ofMap(ofSignedNoise(ofGetElapsedTimef()/400.0f), -1, 1, -360.0f*4, 360.0f*4);
+	// ofGetElapsedTimef() * 14
+	float latitude = sin(ofMap(((int)ofGetElapsedTimef()) % 2400, 0, 2399, 0, 2*PI))*45;
+	cam.orbit(longitude, latitude, floatRadius, ofVec3f(0, 0, 0));
 	// long (degrees), lat, radius, center pt
 	cam.lookAt(ofVec3f(0, 0, 0));
 	// RECORDING UPDATE

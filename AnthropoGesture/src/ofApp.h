@@ -64,6 +64,7 @@ class ofApp : public ofBaseApp{
 		ofxFloatSlider weightCohere;
 		ofxFloatSlider weightSeparate;
 		ofxFloatSlider weightCenterPull;
+		ofxFloatSlider floatRadius;
 
 		ofxVec3Slider cameraAngleDelta;
 		

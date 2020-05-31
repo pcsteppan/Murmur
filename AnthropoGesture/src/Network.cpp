@@ -65,6 +65,10 @@ void Network::updateFactors(float wa, float wc, float ws, float wcp, float ra, f
 
 void Network::represent(bool bDrawOctree) 
 {
+
+	ofSetColor(colorGrid);
+	if (bDrawOctree) root->represent();
+
 	float w = (sin(ofMap(ofGetFrameNum() % 240, 0, 240, 0, TWO_PI))+1)*127.5f;
 	ofColor c(255,255,255,160);
 
@@ -81,6 +85,5 @@ void Network::represent(bool bDrawOctree)
 	//mesh.draw();
 
 	//ofSetColor(102, 166, 199, 10);
-	ofSetColor(10, 10, 10, 80);
-	if(bDrawOctree) root->represent();
+	
 }

@@ -154,7 +154,7 @@ void Actor::represent() {
 	//c = ofColor(glm::distance(this->position, p), 0, 0);
 	ofSetColor(c);
 	ofFill();
-	//ofNoFill();
+	ofNoFill();
 	//ofDrawEllipse(position.x, position.y, size, size);
 	//ofDrawCone(position, 3, 4);
 	//ofDrawArrow(position, position + velocity, 0.5f);
