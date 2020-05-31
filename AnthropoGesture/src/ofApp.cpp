@@ -12,7 +12,7 @@ ofxFloatSlider maxVelocity;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	resr = 3;
+	resr = 5;
 	resh = 1;
 	resc = 1;
 	//network = Network();
@@ -65,9 +65,9 @@ void ofApp::setup(){
 	//gui.add(radius.setup("radius", 140, 10, 300));
 	//gui.add(center.setup("center", { ofGetWidth()*.5, ofGetHeight()*.5 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() }));
 	gui.add(colorGrid.setup("grid color", ofColor(0), ofColor(0, 0), ofColor(255, 255)));
-	gui.add(farColorBoid.setup("far boid color", ofColor(255, 255, 255, 20), ofColor(0, 0), ofColor(255, 255)));
-	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 100, 100, 20), ofColor(0, 0), ofColor(255, 255)));
-	gui.add(colorGround.setup("ground color", ofColor(0, 0, 0, 20), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(farColorBoid.setup("far boid color", ofColor(255, 255, 255, 200), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 100, 100, 200), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(colorGround.setup("ground color", ofColor(0, 0, 0, 255), ofColor(0, 0), ofColor(255, 255)));
 	
 	
 	

@@ -132,6 +132,15 @@ glm::vec3 Actor::seek(glm::vec3 target)
 	return steer;
 }
 
+void rotateToNormal(glm::vec3 normal)
+{
+	normal = glm::normalize(normal);
+	glm::vec3 axis(0,0,1);
+	glm::quat rotation = glm::rotation(axis, normal);
+	glm::mat4 rotationMatrix = glm::toMat4(rotation);
+	ofMultMatrix(rotationMatrix);
+}
+
 void Actor::represent() {
 	float size = ofMap(position.z, -300, 300, 0.1f, 4.0f);
 
@@ -145,14 +154,24 @@ void Actor::represent() {
 	//c = ofColor(glm::distance(this->position, p), 0, 0);
 	ofSetColor(c);
 	ofFill();
+	//ofNoFill();
 	//ofDrawEllipse(position.x, position.y, size, size);
 	//ofDrawCone(position, 3, 4);
 	//ofDrawArrow(position, position + velocity, 0.5f);
 	//ofDrawArrow(position - velocity*5, position, 0.3f);
 	//ofDrawLine(position - velocity * 5, position);
-	//ofDrawPlane(position, 30, 10);
+	//glm::
+	ofPushMatrix();
+	ofTranslate(position);
+	rotateToNormal(velocity);
+	//ofDrawBox(100);
+	ofRotate(-90,1,0,0);
+	float v = glm::length(velocity);
+	ofDrawCone(v*0.2, v);
+	ofPopMatrix();
+	//ofDrawPlane(position, 600, 10);
 	
-	ofDrawLine(position, position+(velocity+velocity));
+	//ofDrawLine(position, position+(velocity+velocity));
 }
 
 void Actor::updateFactors(float* pForceWeights, float* pForceRadii) {
