@@ -9,10 +9,13 @@ ofImage palette;
 ofPixels palettePixels;
 ofxFloatSlider maxForce;
 ofxFloatSlider maxVelocity;
+ofxFloatSlider weightCenterPullX;
+ofxFloatSlider weightCenterPullY;
+ofxFloatSlider weightCenterPullZ;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	resr = 5;
+	resr = 6;
 	resh = 1;
 	resc = 1;
 	//network = Network();
@@ -33,7 +36,7 @@ void ofApp::setup(){
 	// which would be the fourth argument after GL_RGB
 	// like 2, which would make the lines smooth instead of pixellated
 	//m_Fbo.allocate(1920, 1080, GL_RGBA);
-	m_Fbo.allocate(1920 * 2, 1080 * 2, GL_RGBA);
+	m_Fbo.allocate(1920, 1080, GL_RGBA);
 	m_Recorder.setup(true, false, glm::vec2(m_Fbo.getWidth(), m_Fbo.getHeight()));
 	m_Recorder.setOverWrite(true);
 	//m_Recorder.setVideoCodec("mjpeg");
@@ -64,6 +67,10 @@ void ofApp::setup(){
 	gui.add(weightCohere.setup("w:cohere", 0.75, 0, 1));
 	gui.add(weightSeparate.setup("w:separate", 1, 0, 1));
 	gui.add(weightCenterPull.setup("w:center", 0.3, 0, 1));
+
+	gui.add(weightCenterPullX.setup("w:center.x", 1, 0, 1));
+	gui.add(weightCenterPullY.setup("w:center.y", 1, 0, 1));
+	gui.add(weightCenterPullZ.setup("w:center.z", 1, 0, 1));
 	//gui.add(filled.setup("fill", true));
 	//gui.add(radius.setup("radius", 140, 10, 300));
 	//gui.add(center.setup("center", { ofGetWidth()*.5, ofGetHeight()*.5 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() }));
@@ -71,8 +78,6 @@ void ofApp::setup(){
 	gui.add(farColorBoid.setup("far boid color", ofColor(255, 255, 255, 40), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 255, 255, 40), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(colorGround.setup("ground color", ofColor(0, 0, 0, 255), ofColor(0, 0), ofColor(255, 255)));
-	
-	
 	
 	//gui.add(circleResolution.setup("circle res", 5, 3, 90));
 	//gui.add(twoCircles.setup("two circles"));

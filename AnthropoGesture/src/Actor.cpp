@@ -106,7 +106,13 @@ void Actor::difference(const vector<Actor*> &relations) {
 
 	//float f_mx = ofMap(ofGetMouseX() , 0, ofGetWidth(), 0.0f, 1.0f); 
 	float inverse_distance = glm::length(position) / cube_size;
-	applyForce(forceWeights[3] * inverse_distance * seek(glm::vec3(0,0,0)));
+	
+	glm::vec3 centerPull = forceWeights[3] * inverse_distance * seek(glm::vec3(0,0,0));
+	centerPull.x *= weightCenterPullX;
+	centerPull.y *= weightCenterPullY;
+	centerPull.z *= weightCenterPullZ;
+	applyForce(centerPull);
+
 
 	velocity += acceleration;
 	if (glm::length(velocity) > maxVelocity)
@@ -145,7 +151,8 @@ void Actor::represent() {
 	float size = ofMap(position.z, -300, 300, 0.1f, 4.0f);
 
 	ofColor c = nearColorBoid;
-	float camDist = ofMap(glm::distance(cam.getPosition(), this->position), 0, 2000, 0.0f, 1.0f, true);
+	float camDist = ofMap(glm::length(this->position), 0, cube_size*2, 0.0f, 1.0f, true);
+	// float camDist = ofMap(glm::distance(cam.getPosition(), this->position), 0, 2000, 0.0f, 1.0f, true);
 	c.lerp(farColorBoid, camDist);
 	
 	//ofColor c = ofColor(color.r,color.g,color.b);

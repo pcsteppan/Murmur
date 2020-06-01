@@ -16,6 +16,9 @@ extern ofxFloatSlider maxForce;
 extern ofxFloatSlider maxVelocity;
 extern ofImage palette;
 extern ofPixels palettePixels;
+extern ofxFloatSlider weightCenterPullX;
+extern ofxFloatSlider weightCenterPullY;
+extern ofxFloatSlider weightCenterPullZ;
 
 class ofApp : public ofBaseApp{
 
@@ -64,6 +67,7 @@ class ofApp : public ofBaseApp{
 		ofxFloatSlider weightCohere;
 		ofxFloatSlider weightSeparate;
 		ofxFloatSlider weightCenterPull;
+		
 		ofxFloatSlider floatRadius;
 
 		ofxVec3Slider cameraAngleDelta;
