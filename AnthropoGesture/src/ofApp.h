@@ -21,6 +21,10 @@ extern ofxFloatSlider weightCenterPullY;
 extern ofxFloatSlider weightCenterPullZ;
 extern ofxFloatSlider actorSize;
 
+extern ofxFloatSlider weightPullDirectionalX;
+extern ofxFloatSlider weightPullDirectionalY;
+extern ofxFloatSlider weightPullDirectionalZ;
+
 class ofApp : public ofBaseApp{
 
 	public:

@@ -13,6 +13,9 @@ ofxFloatSlider weightCenterPullX;
 ofxFloatSlider weightCenterPullY;
 ofxFloatSlider weightCenterPullZ;
 ofxFloatSlider actorSize;
+ofxFloatSlider weightPullDirectionalX;
+ofxFloatSlider weightPullDirectionalY;
+ofxFloatSlider weightPullDirectionalZ;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -73,6 +76,11 @@ void ofApp::setup(){
 	gui.add(weightCenterPullX.setup("w:center.x", 1, 0, 1));
 	gui.add(weightCenterPullY.setup("w:center.y", 1, 0, 1));
 	gui.add(weightCenterPullZ.setup("w:center.z", 1, 0, 1));
+
+	gui.add(weightPullDirectionalX.setup("w:dir.x", 0, -1, 1));
+	gui.add(weightPullDirectionalY.setup("w:dir.y", 0, -1, 1));
+	gui.add(weightPullDirectionalZ.setup("w:dir.z", 0, -1, 1));
+
 	//gui.add(filled.setup("fill", true));
 	//gui.add(radius.setup("radius", 140, 10, 300));
 	//gui.add(center.setup("center", { ofGetWidth()*.5, ofGetHeight()*.5 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() }));
