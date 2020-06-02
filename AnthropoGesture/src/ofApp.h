@@ -80,4 +80,7 @@ class ofApp : public ofBaseApp{
 		//ofxLabel screenSize;
 
 		ofxPanel gui;
+
+		int recordingFrameRate;
+		float now;
 };

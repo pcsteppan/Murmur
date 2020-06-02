@@ -22,7 +22,7 @@ void ofApp::setup(){
 	ofSetConeResolution(resr, resh, resc);
 	ofSetBackgroundAuto(false);
 	ofBackground(255,255,255);
-	ofSetFrameRate(30);
+	ofSetFrameRate(24);
 
 	// PALETTE SETUP
 	palette.load("./images/palette1.png");
@@ -36,12 +36,12 @@ void ofApp::setup(){
 	// which would be the fourth argument after GL_RGB
 	// like 2, which would make the lines smooth instead of pixellated
 	//m_Fbo.allocate(1920, 1080, GL_RGBA);
-	m_Fbo.allocate(1920, 1080, GL_RGBA);
+	m_Fbo.allocate(1920 * 2, 1080 * 2, GL_RGBA);
 	m_Recorder.setup(true, false, glm::vec2(m_Fbo.getWidth(), m_Fbo.getHeight()));
 	m_Recorder.setOverWrite(true);
 	//m_Recorder.setVideoCodec("mjpeg");
-	m_Recorder.setFps(30);
-	m_Recorder.setBitRate(1024*24);
+	m_Recorder.setFps(24);
+	m_Recorder.setBitRate(1024*40);
 
 	// EASYCAM SETUP
 	cam.setTarget(glm::vec3(0,0,0));
@@ -61,7 +61,7 @@ void ofApp::setup(){
 	gui.add(radiusSeparate.setup("r:separate", 80, 0, 500));
 
 	gui.add(maxForce.setup("max force", 0.32f, 0.0f, 0.5f));
-	gui.add(maxVelocity.setup("max velocity", 35.0f, 0.0f, 100.0f));
+	gui.add(maxVelocity.setup("max velocity", 24.0f, 0.0f, 100.0f));
 
 	gui.add(weightAlign.setup("w:align", 0.6, 0, 1));
 	gui.add(weightCohere.setup("w:cohere", 0.75, 0, 1));
@@ -74,9 +74,9 @@ void ofApp::setup(){
 	//gui.add(filled.setup("fill", true));
 	//gui.add(radius.setup("radius", 140, 10, 300));
 	//gui.add(center.setup("center", { ofGetWidth()*.5, ofGetHeight()*.5 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() }));
-	gui.add(colorGrid.setup("grid color", ofColor(0), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(colorGrid.setup("grid color", ofColor(200,0,200,2), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(farColorBoid.setup("far boid color", ofColor(255, 255, 255, 40), ofColor(0, 0), ofColor(255, 255)));
-	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 255, 255, 40), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 255, 255, 1), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(colorGround.setup("ground color", ofColor(0, 0, 0, 255), ofColor(0, 0), ofColor(255, 255)));
 	
 	//gui.add(circleResolution.setup("circle res", 5, 3, 90));
@@ -87,6 +87,8 @@ void ofApp::setup(){
 	bHide = bDrawOctree = false;
 	bClearImage = true;
 	//ring.load("ring.wav");
+	recordingFrameRate = 24;
+	now = 0;
 }
 
 //--------------------------------------------------------------
@@ -98,6 +100,8 @@ void ofApp::exit() {
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	now += 1. / (float)recordingFrameRate;
+
 	network.updateFactors(weightAlign, weightCohere, weightSeparate, weightCenterPull, radiusAlign, radiusCohere, radiusSeparate);
 	network.difference();
 	printf("framerate: %f\n", ofGetFrameRate());
@@ -105,9 +109,9 @@ void ofApp::update(){
 	// noise for latitude and longitude
 	
 	
-	float longitude = ofMap(ofSignedNoise(ofGetElapsedTimef()/400.0f), -1, 1, -360.0f*4, 360.0f*4);
+	float longitude = ofMap(ofSignedNoise(now/100.0f), -1, 1, -360.0f*4, 360.0f*4);
 	// ofGetElapsedTimef() * 14
-	float latitude = sin(ofMap(((int)ofGetElapsedTimef()) % 2400, 0, 2399, 0, 2*PI))*45;
+	float latitude = sin(ofMap((int)(now*1000) % 120000, 0, 111119, 0.0f, 2.0f*PI))*45.0f;
 	cam.orbit(longitude, latitude, floatRadius, ofVec3f(0, 0, 0));
 	// long (degrees), lat, radius, center pt
 	cam.lookAt(ofVec3f(0, 0, 0));

@@ -152,6 +152,7 @@ void Actor::represent() {
 
 	ofColor c = nearColorBoid;
 	float camDist = ofMap(glm::length(this->position), 0, cube_size*2, 0.0f, 1.0f, true);
+	camDist *= camDist;
 	// float camDist = ofMap(glm::distance(cam.getPosition(), this->position), 0, 2000, 0.0f, 1.0f, true);
 	c.lerp(farColorBoid, camDist);
 	
