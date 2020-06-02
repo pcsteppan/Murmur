@@ -162,7 +162,7 @@ void Actor::represent() {
 	//c = ofColor(glm::distance(this->position, p), 0, 0);
 	ofSetColor(c);
 	ofFill();
-	ofNoFill();
+	//ofNoFill();
 	//ofDrawEllipse(position.x, position.y, size, size);
 	//ofDrawCone(position, 3, 4);
 	//ofDrawArrow(position, position + velocity, 0.5f);
@@ -174,8 +174,8 @@ void Actor::represent() {
 	rotateToNormal(velocity);
 	//ofDrawBox(100);
 	ofRotate(-90,1,0,0);
-	float v = glm::length(velocity);
-	ofDrawCone(v*0.2, v);
+	//float v = glm::length(velocity);
+	ofDrawCone(0.2*actorSize, actorSize);
 	ofPopMatrix();
 	//ofDrawPlane(position, 600, 10);
 	

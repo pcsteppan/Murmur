@@ -19,6 +19,7 @@ extern ofPixels palettePixels;
 extern ofxFloatSlider weightCenterPullX;
 extern ofxFloatSlider weightCenterPullY;
 extern ofxFloatSlider weightCenterPullZ;
+extern ofxFloatSlider actorSize;
 
 class ofApp : public ofBaseApp{
 

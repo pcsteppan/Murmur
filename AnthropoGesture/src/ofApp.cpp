@@ -12,6 +12,7 @@ ofxFloatSlider maxVelocity;
 ofxFloatSlider weightCenterPullX;
 ofxFloatSlider weightCenterPullY;
 ofxFloatSlider weightCenterPullZ;
+ofxFloatSlider actorSize;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -53,15 +54,16 @@ void ofApp::setup(){
 	gui.setup(); // most of the time you don't need a name
 
 	//gui.add(cameraAngleDelta.setup("cam-angle diff", { 0, 0, 0 }, { 0, 0, 0 }, { TWO_PI, TWO_PI, TWO_PI }));
-	gui.add(floatRadius.setup("camera radius", 1000, 500, 1500));
+	gui.add(floatRadius.setup("camera radius", 1000, 200, 2500));
 
 
 	gui.add(radiusAlign.setup("r:align", 300, 0, 500));
 	gui.add(radiusCohere.setup("r:cohere", 400, 0, 500));
 	gui.add(radiusSeparate.setup("r:separate", 80, 0, 500));
 
-	gui.add(maxForce.setup("max force", 0.32f, 0.0f, 0.5f));
+	gui.add(maxForce.setup("max force", 0.32f, 0.0f, 0.6f));
 	gui.add(maxVelocity.setup("max velocity", 24.0f, 0.0f, 100.0f));
+	gui.add(actorSize.setup("actor size", 20.0f, 0.0f, 100.0f));
 
 	gui.add(weightAlign.setup("w:align", 0.6, 0, 1));
 	gui.add(weightCohere.setup("w:cohere", 0.75, 0, 1));
@@ -74,7 +76,7 @@ void ofApp::setup(){
 	//gui.add(filled.setup("fill", true));
 	//gui.add(radius.setup("radius", 140, 10, 300));
 	//gui.add(center.setup("center", { ofGetWidth()*.5, ofGetHeight()*.5 }, { 0, 0 }, { ofGetWidth(), ofGetHeight() }));
-	gui.add(colorGrid.setup("grid color", ofColor(200,0,200,2), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(colorGrid.setup("grid color", ofColor(0,0,0,5), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(farColorBoid.setup("far boid color", ofColor(255, 255, 255, 40), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 255, 255, 1), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(colorGround.setup("ground color", ofColor(0, 0, 0, 255), ofColor(0, 0), ofColor(255, 255)));
