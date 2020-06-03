@@ -16,6 +16,7 @@ ofxFloatSlider actorSize;
 ofxFloatSlider weightPullDirectionalX;
 ofxFloatSlider weightPullDirectionalY;
 ofxFloatSlider weightPullDirectionalZ;
+ofxToggle colorSplit;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -40,7 +41,7 @@ void ofApp::setup(){
 	// which would be the fourth argument after GL_RGB
 	// like 2, which would make the lines smooth instead of pixellated
 	//m_Fbo.allocate(1920, 1080, GL_RGBA);
-	m_Fbo.allocate(1920 * 2, 1080 * 2, GL_RGBA);
+	m_Fbo.allocate(1920, 1080, GL_RGBA);
 	m_Recorder.setup(true, false, glm::vec2(m_Fbo.getWidth(), m_Fbo.getHeight()));
 	m_Recorder.setOverWrite(true);
 	//m_Recorder.setVideoCodec("mjpeg");
@@ -87,6 +88,7 @@ void ofApp::setup(){
 	gui.add(colorGrid.setup("grid color", ofColor(0,0,0,5), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(farColorBoid.setup("far boid color", ofColor(255, 255, 255, 40), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(nearColorBoid.setup("near boid color", ofColor(255, 255, 255, 1), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(colorSplit.setup("split", false));
 	gui.add(colorGround.setup("ground color", ofColor(0, 0, 0, 255), ofColor(0, 0), ofColor(255, 255)));
 	
 	//gui.add(circleResolution.setup("circle res", 5, 3, 90));
@@ -194,6 +196,10 @@ void ofApp::keyReleased(int key){
 			//m_Recorder.setOutputPath("C:/Users/Andrew/Documents/Patrick/" + ofGetTimestampString() + ".avi");
 			m_Recorder.startCustomRecord();
 		}
+	}
+	else if (key == 'c')
+	{
+		colorSplit = !colorSplit;
 	}
 }
 

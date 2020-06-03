@@ -160,9 +160,20 @@ void Actor::represent() {
 
 	//ofColor c = palettePixels.getColor((int)position.x, (int)position.y);
 	//c = ofColor(glm::distance(this->position, p), 0, 0);
+	if (colorSplit) {
+		float actorAngle = glm::atan(position.x, position.z);
+		float camAngle = glm::atan(cam.getPosition().x, cam.getPosition().y);
+		float camAngleRight = camAngle + PI / 2.;
+		float camAngleLeft = camAngle - PI / 2.;
+		if (camAngleRight > TWO_PI) camAngleRight -= TWO_PI;
+		if (camAngleLeft < 0) camAngleLeft -= TWO_PI;
+		if (actorAngle > camAngleRight && actorAngle < camAngleLeft)
+			c = ofColor(0, 0, 255, 30);
+	}
+	
 	ofSetColor(c);
 	ofFill();
-	//ofNoFill();
+	ofNoFill();
 	//ofDrawEllipse(position.x, position.y, size, size);
 	//ofDrawCone(position, 3, 4);
 	//ofDrawArrow(position, position + velocity, 0.5f);

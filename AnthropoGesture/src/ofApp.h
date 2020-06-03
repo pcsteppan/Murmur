@@ -24,6 +24,7 @@ extern ofxFloatSlider actorSize;
 extern ofxFloatSlider weightPullDirectionalX;
 extern ofxFloatSlider weightPullDirectionalY;
 extern ofxFloatSlider weightPullDirectionalZ;
+extern ofxToggle colorSplit;
 
 class ofApp : public ofBaseApp{
 
