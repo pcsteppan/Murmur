@@ -12,4 +12,4 @@ The sketch has many controls for color, and the forces acting from and on the bo
 ![](images/flock_cohere.gif)
 ![](images/flock_grid.gif)
 
-Inspired and guided by Daniel Shiffman's NOC, Reynold's Boids, Turtles Termites and Traffic Jams, and Latour.
+Inspired and guided by Daniel Shiffman's NOC
